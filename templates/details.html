@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ movie.title }} - Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background-color: #121212; color: white; font-family: sans-serif; padding: 50px;">
+    <a href="/" style="color: #00d2ff; text-decoration: none;">← Back to Home</a>
+    <div style="display: flex; gap: 50px; margin-top: 30px;">
+        <img src="{{ movie.poster }}" width="300" style="border-radius: 10px;">
+        <div>
+            <h1>{{ movie.title }}</h1>
+            <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <p><strong>Rating:</strong> ⭐ {{ movie.rating }} / 10</p>
+            <h3>Overview</h3>
+            <p style="line-height: 1.6;">{{ movie.overview }}</p>
+        </div>
+    </div>
+</body>
+</html>

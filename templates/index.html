@@ -1,0 +1,114 @@
+<h1>Movie Recommender System</h1>
+
+<div class="search-container">
+    <form id="search-form" onsubmit="submitSearch(event)">
+        <input 
+            list="movie-options" 
+            id="movie-search" 
+            name="movie_name" 
+            placeholder="Type a movie name..." 
+            oninput="fetchSuggestions(this.value)"
+            required
+        >
+        <datalist id="movie-options"></datalist>
+        <button type="submit">Recommend</button>
+    </form>
+</div>
+
+
+<div id="recommendations-container" style="display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap;">
+    {% if recommendations %}
+        {% for movie in recommendations %}
+        <div style="width: 150px; text-align: center;">
+            <a href="/movie/{{ movie.id }}" style="text-decoration: none; color: white;">
+                <img src="{{ movie.poster }}" width="100%" style="border-radius: 8px;">
+                <p>{{ movie.title }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Search for a movie to get recommendations</p>
+    {% endif %}
+</div>
+
+
+<script>
+async function fetchSuggestions(query) {
+    if (query.length < 2) return;
+    const response = await fetch(`/autocomplete?q=${query}`);
+    const suggestions = await response.json();
+    const datalist = document.getElementById('movie-options');
+    datalist.innerHTML = '';
+    suggestions.forEach(title => {
+        const option = document.createElement('option');
+        option.value = title;
+        datalist.appendChild(option);
+    });
+}
+
+async function submitSearch(event) {
+    event.preventDefault();
+    const movieName = document.getElementById('movie-search').value;
+    
+    const response = await fetch('/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ movie_name: movieName })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+        displayResults(data.recommendations);
+    } else {
+        alert(data.message);
+    }
+}
+
+function displayResults(movies) {
+    const container = document.getElementById('recommendations-container');
+    container.innerHTML = ''; // Clear current results
+
+    movies.forEach(movie => {
+        const movieDiv = `
+            <div style="width: 150px; text-align: center;">
+                <a href="/movie/${movie.id}" style="text-decoration: none; color: white;">
+                    <img src="${movie.poster}" width="100%" style="border-radius: 8px;">
+                    <p style="color:white;">${movie.title}</p>
+                </a>
+            </div>`;
+        container.innerHTML += movieDiv;
+    });
+}
+</script>
+
+
+
+
+<style>
+    body {
+        background-color: #0e1117;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        padding: 40px;
+    }
+    input {
+        background-color: #262730;
+        color: white;
+        border: 1px solid #4a4a4a;
+        padding: 10px;
+        border-radius: 5px;
+        width: 300px;
+    }
+    button {
+        background-color: #ff4b4b;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .movie-card:hover {
+        transform: scale(1.05);
+        transition: 0.3s;
+    }
+</style>
