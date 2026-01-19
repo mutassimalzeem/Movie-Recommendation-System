@@ -1,9 +1,9 @@
 #  Movie Recommender System (Content-Based)
 
-A **Content-Based Movie Recommendation System** that suggests movies by analyzing their “content DNA” — **genres, keywords, cast, and director**.  
-Unlike collaborative filtering (which depends on other users’ ratings), this model recommends movies that are **most similar to your selected movie** based on its metadata.
+This is a full-stack, **content-based movie recommendation engine.** It suggests movies similar to a user's choice by analyzing metadata such as genres, keywords, cast, and directors. While originally inspired by the CampusX Streamlit project, this version has been upgraded to a **decoupled FastAPI architecture** for better performance and scalability.
 
----
+<img width="1416" height="614" alt="image" src="https://github.com/user-attachments/assets/9e227d97-5d2f-407f-bd76-ad8e7ffeece8" />
+
 
 ##  Key Features
 
@@ -13,15 +13,19 @@ Unlike collaborative filtering (which depends on other users’ ratings), this m
 -  Real-time posters fetched via **TMDB API**
 -  Backend powered by **FastAPI**
 
----
+##  New Upgrades
+
+-  Decoupled Architecture: Separation of a high-performance Python backend (FastAPI) and a dynamic frontend (HTML/JS).
+-  Autocomplete Search: Real-time title suggestions as you type, reducing server load and improving UX.
+-  Dynamic Poster Fetching: Integrated TMDB API to fetch high-resolution posters in real-time.
+-  AJAX Updates: The page updates results dynamically without reloading, providing a smooth, app-like experience.
 
 ## Tech Stack
 
 - **Language:** Python  
-- **Data Analysis:** Pandas, NumPy  
-- **Machine Learning:** Scikit-learn (`CountVectorizer`, `cosine_similarity`)  
-- **NLP:** NLTK (`PorterStemmer`)  
-- **Backend:** FastAPI  
+- **Data Analysis:** Pandas, NumPy (with NumPy-to-JSON serialization fixes)  
+- **Machine Learning:** Scikit-learn (`CountVectorizer`, `cosine_similarity`)    
+- **Backend:** FastAPI, Uvicorn (ASGI)
 - **Frontend:** HTML/CSS + Jinja2 Templates  
 - **API:** TMDB API (poster fetching)
 
@@ -111,14 +115,11 @@ Open in your browser:
 
 http://127.0.0.1:8000
 
-Future Improvements
+#  Configuration:
+To use the poster fetching feature, obtain an API Key from The Movie Database (TMDB) and replace the placeholder in app.py:
+```bash
+api_key = "your_tmdb_api_key_here"
+```
 
-🔍 Add a search bar with auto-complete
-
-⭐ Add user ratings for a Hybrid Recommendation System
-
-🐳 Dockerize and deploy the app using Docker
-
-📌 Disclaimer
-
-This project was built as part of a learning journey guided by the CampusX Machine Learning series.
+Author: Mutassim Al Zeem
+Project Context: Upgraded from CampusX Machine Learning series to a modern API-first approach.
