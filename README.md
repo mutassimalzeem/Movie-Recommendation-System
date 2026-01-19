@@ -1,4 +1,4 @@
-#  Movie Recommender System (Content-Based)
+#  Movie Recommendation System (Content-Based)
 
 This is a full-stack, **content-based movie recommendation engine.** It suggests movies similar to a user's choice by analyzing metadata such as genres, keywords, cast, and directors. While originally inspired by the CampusX Streamlit project, this version has been upgraded to a **decoupled FastAPI architecture** for better performance and scalability.
 
